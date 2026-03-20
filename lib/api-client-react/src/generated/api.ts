@@ -5,18 +5,26 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  EmailSubmitBody,
+  EmailSubmitResponse,
+  ErrorResponse,
+  HealthStatus,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -99,3 +107,90 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Validates email domain and logs access if authorized
+ * @summary Submit email for access
+ */
+export const getSubmitEmailUrl = () => {
+  return `/api/auth/email`;
+};
+
+export const submitEmail = async (
+  emailSubmitBody: EmailSubmitBody,
+  options?: RequestInit,
+): Promise<EmailSubmitResponse> => {
+  return customFetch<EmailSubmitResponse>(getSubmitEmailUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(emailSubmitBody),
+  });
+};
+
+export const getSubmitEmailMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitEmail>>,
+    TError,
+    { data: BodyType<EmailSubmitBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitEmail>>,
+  TError,
+  { data: BodyType<EmailSubmitBody> },
+  TContext
+> => {
+  const mutationKey = ["submitEmail"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitEmail>>,
+    { data: BodyType<EmailSubmitBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitEmail(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitEmailMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitEmail>>
+>;
+export type SubmitEmailMutationBody = BodyType<EmailSubmitBody>;
+export type SubmitEmailMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Submit email for access
+ */
+export const useSubmitEmail = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitEmail>>,
+    TError,
+    { data: BodyType<EmailSubmitBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitEmail>>,
+  TError,
+  { data: BodyType<EmailSubmitBody> },
+  TContext
+> => {
+  return useMutation(getSubmitEmailMutationOptions(options));
+};

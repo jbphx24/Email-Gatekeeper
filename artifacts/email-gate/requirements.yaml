@@ -1,0 +1,16 @@
+packages:
+  "framer-motion": "For premium smooth form entry and loading animations"
+  "react-hook-form": "For robust form state management"
+  "@hookform/resolvers": "For Zod schema validation integration"
+  "clsx": "For conditional class merging"
+  "tailwind-merge": "For merging tailwind classes safely"
+
+images:
+  - path: "artifacts/email-gate/public/images/bg-abstract.png"
+    description: "A very subtle, minimal abstract background with soft, blurred gradients in light gray, white, and a hint of pale corporate blue. Clean, professional, luxury corporate aesthetic, out of focus."
+    aspect_ratio: "16:9"
+
+notes:
+  - The app intercepts traffic at the root to check sessionStorage for authorization.
+  - Expects the API endpoint POST /api/auth/email to be available for validation.
+  - On success, the frontend redirects to /site/ via window.location.href.

@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /auth/email:
+    post:
+      operationId: submitEmail
+      tags: [auth]
+      summary: Submit email for access
+      description: Validates email domain and logs access if authorized
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailSubmitBody"
+      responses:
+        "200":
+          description: Email authorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailSubmitResponse"
+        "403":
+          description: Email domain not authorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "400":
+          description: Invalid email
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +66,25 @@ components:
           type: string
       required:
         - status
-
+    EmailSubmitBody:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+        - email
+    EmailSubmitResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

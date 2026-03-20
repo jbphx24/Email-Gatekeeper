@@ -8,3 +8,15 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface EmailSubmitBody {
+  email: string;
+}
+
+export interface EmailSubmitResponse {
+  success: boolean;
+}
+
+export interface ErrorResponse {
+  error: string;
+}

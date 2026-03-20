@@ -14,3 +14,15 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Validates email domain and logs access if authorized
+ * @summary Submit email for access
+ */
+export const SubmitEmailBody = zod.object({
+  email: zod.string().email(),
+});
+
+export const SubmitEmailResponse = zod.object({
+  success: zod.boolean(),
+});

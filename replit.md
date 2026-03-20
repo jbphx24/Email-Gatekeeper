@@ -94,3 +94,21 @@ Generated React Query hooks and fetch client from the OpenAPI spec (e.g. `useHea
 ### `scripts` (`@workspace/scripts`)
 
 Utility scripts package. Each script is a `.ts` file in `src/` with a corresponding npm script in `package.json`. Run scripts via `pnpm --filter @workspace/scripts run <script>`. Scripts can import any workspace package (e.g., `@workspace/db`) by adding it as a dependency in `scripts/package.json`.
+
+### `artifacts/email-gate` (`@workspace/email-gate`)
+
+React + Vite email gate SPA served at `/`. Restricts access to authorized email domains (`@lathropgpm.com`, `@kindredbravely.com`) before redirecting to the protected website at `/site/`.
+
+- Entry: `src/main.tsx`
+- App: `src/App.tsx` — sets up routing and QueryClient
+- Gate page: `src/pages/Gate.tsx` — checks sessionStorage, shows email form, calls `POST /api/auth/email`, stores flag and redirects on success
+- Session persistence: sessionStorage key `email-gate-authorized` (cleared on browser close)
+- Protected content: static website served by API server at `/site/`
+
+### Protected Website (`/site/`)
+
+Static files from the user's uploaded `dist.zip` are extracted to `artifacts/api-server/public/` and served at `/site/` by the Express API server.
+
+### `email_access_log` (PostgreSQL table)
+
+Created via `lib/db/src/schema/emailAccessLog.ts`. Stores email and timestamp for every authorized access. Schema: `id` (serial PK), `email` (text), `accessed_at` (timestamptz, defaults to now).

@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Email Gate"
+version = "1.0.0"
+id = "artifacts/email-gate"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18687
+
+[services.development]
+run = "pnpm --filter @workspace/email-gate run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/email-gate", "run", "build" ]
+publicDir = "artifacts/email-gate/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18687"
+BASE_PATH = "/"
