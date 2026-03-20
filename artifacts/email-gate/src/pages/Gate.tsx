@@ -29,7 +29,7 @@ export default function Gate() {
         const message =
           error.data?.error ??
           error.message ??
-          "Access is restricted to authorized email domains (@lathropgpm.com or @kindredbravely.com).";
+          "Access is restricted to authorized email domains.";
         setServerError(message);
       },
     },
@@ -164,10 +164,9 @@ export default function Gate() {
                     initial={{ opacity: 0, height: 0, marginTop: 0 }}
                     animate={{ opacity: 1, height: "auto", marginTop: 8 }}
                     exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                    className="text-sm font-medium flex items-start gap-1.5 overflow-hidden"
+                    className="text-sm font-medium text-center overflow-hidden"
                     style={{ color: "#e23d4e" }}
                   >
-                    <span className="shrink-0 mt-0.5">•</span>
                     <span>{errors.email?.message || serverError}</span>
                   </motion.div>
                 )}

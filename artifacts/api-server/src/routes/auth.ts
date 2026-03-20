@@ -18,8 +18,7 @@ router.post("/auth/email", async (req, res): Promise<void> => {
 
   if (!domain || !ALLOWED_DOMAINS.includes(domain)) {
     res.status(403).json({
-      error:
-        "Access is restricted to authorized email domains (@lathropgpm.com or @kindredbravely.com)",
+      error: "Access is restricted to authorized email domains.",
     });
     return;
   }
