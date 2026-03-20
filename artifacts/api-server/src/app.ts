@@ -36,9 +36,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", router);
 
 const publicDir = path.resolve(__dirname, "..", "public");
+
 app.use("/site", express.static(publicDir));
 app.get("/site/*splat", (_req, res) => {
   res.sendFile(path.join(publicDir, "index.html"));
+});
+
+app.use("/assets", express.static(path.join(publicDir, "assets")));
+app.use("/documents", express.static(path.join(publicDir, "documents")));
+app.get("/favicon.png", (_req, res) => {
+  res.sendFile(path.join(publicDir, "favicon.png"));
+});
+app.get("/hansen_photo.webp", (_req, res) => {
+  res.sendFile(path.join(publicDir, "hansen_photo.webp"));
+});
+app.get("/opengraph.jpg", (_req, res) => {
+  res.sendFile(path.join(publicDir, "opengraph.jpg"));
 });
 
 export default app;

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSubmitEmail } from "@workspace/api-client-react";
+import type { SubmitEmailMutationError } from "@workspace/api-client-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShieldCheck, Mail, ArrowRight, LockKeyhole } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,13 +27,11 @@ export default function Gate() {
         // Redirect to the protected static site
         window.location.href = "/site/";
       },
-      onError: (error: any) => {
-        // Extract error message from the response if available
-        const message = error?.response?.data?.error 
-          || error?.data?.error 
-          || error?.message 
-          || "Access is restricted to authorized email domains (@lathropgpm.com or @kindredbravely.com).";
-        
+      onError: (error: SubmitEmailMutationError) => {
+        const message =
+          error.data?.error ??
+          error.message ??
+          "Access is restricted to authorized email domains (@lathropgpm.com or @kindredbravely.com).";
         setServerError(message);
       },
     },
