@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# systemd service for the email-gate Node.js API server
+#
+# Install:
+#   sudo cp deploy/email-gate-api.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable email-gate-api
+#   sudo systemctl start email-gate-api
+#
+# Check status:  sudo systemctl status email-gate-api
+# View logs:     sudo journalctl -u email-gate-api -f
+# ---------------------------------------------------------------------------
+
+[Unit]
+Description=Email Gate — Node.js API Server
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+
+WorkingDirectory=/opt/email-gate/api-server
+
+# Load secrets from this file — create it before starting the service
+# See DEPLOYMENT.md for required variables
+EnvironmentFile=/etc/email-gate/env
+
+ExecStart=/usr/bin/node dist/index.cjs
+Restart=on-failure
+RestartSec=5
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=email-gate-api
+
+[Install]
+WantedBy=multi-user.target

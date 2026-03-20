@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "LTsxfCFbLaw3I65ezidxO"
+uri = "file://DEPLOYMENT.md"
+type = "text"
+title = "Deployment Guide"
