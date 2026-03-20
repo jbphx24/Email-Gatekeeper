@@ -53,11 +53,11 @@ export default function Gate() {
     const isAuthorized = sessionStorage.getItem("email-gate-authorized");
     if (isAuthorized) {
       window.location.href = "/site/";
-    } else {
-      // Small artificial delay to prevent UI flicker while checking
-      const timer = setTimeout(() => setIsCheckingSession(false), 300);
-      return () => clearTimeout(timer);
+      return;
     }
+    // Small artificial delay to prevent UI flicker while checking
+    const timer = setTimeout(() => setIsCheckingSession(false), 300);
+    return () => clearTimeout(timer);
   }, []);
 
   const onSubmit = (data: FormValues) => {
