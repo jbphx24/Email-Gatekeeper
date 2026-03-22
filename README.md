@@ -105,6 +105,10 @@ React + Vite email gate SPA served at `/`. Restricts access to authorized email 
 - Session persistence: sessionStorage key `email-gate-authorized` (cleared on browser close)
 - Protected content: static website served by API server at `/site/`
 
+### Email Notifications (Resend)
+
+When an authorized user passes the gate, the API server sends a notification email via Resend to `NOTIFICATION_EMAIL` (stored as env var). The Resend API key is stored as the `RESEND_API_KEY` secret. Notification logic lives in `artifacts/api-server/src/lib/notify.ts`.
+
 ### Protected Website (`/site/`)
 
 Static files from the user's uploaded `dist.zip` are extracted to `artifacts/api-server/public/` and served at `/site/` by the Express API server.

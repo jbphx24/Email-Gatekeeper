@@ -142,6 +142,8 @@ sudo tee /etc/email-gate/env > /dev/null <<EOF
 NODE_ENV=production
 PORT=3000
 DATABASE_URL=postgresql://emailgate_user:choose-a-strong-password@localhost:5432/emailgate
+RESEND_API_KEY=re_your_resend_api_key_here
+NOTIFICATION_EMAIL=you@example.com
 EOF
 
 # Restrict access to the file
