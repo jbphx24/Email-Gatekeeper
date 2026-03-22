@@ -1,6 +1,7 @@
 import { Router, type IRouter } from "express";
 import { db, emailAccessLogTable } from "@workspace/db";
 import { SubmitEmailBody, SubmitEmailResponse } from "@workspace/api-zod";
+import { sendAccessNotification } from "../lib/notify";
 
 const ALLOWED_DOMAINS = ["lathropgpm.com", "kindredbravely.com"];
 
@@ -26,6 +27,11 @@ router.post("/auth/email", async (req, res): Promise<void> => {
   await db.insert(emailAccessLogTable).values({ email });
 
   req.log.info({ email }, "Email access logged");
+
+  // Send notification email without blocking the auth response
+  sendAccessNotification(email).catch((err) => {
+    req.log.error({ err }, "Unhandled error in access notification");
+  });
 
   res.json(SubmitEmailResponse.parse({ success: true }));
 });
