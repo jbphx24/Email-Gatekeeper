@@ -4,6 +4,15 @@ import { logger } from "./logger";
 const resend = new Resend(process.env.RESEND_API_KEY);
 const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL ?? "";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function sendAccessNotification(email: string): Promise<void> {
   if (!process.env.RESEND_API_KEY) {
     logger.warn("RESEND_API_KEY is not set — skipping email notification");
@@ -14,6 +23,8 @@ export async function sendAccessNotification(email: string): Promise<void> {
     logger.warn("NOTIFICATION_EMAIL is not set — skipping email notification");
     return;
   }
+
+  const safeEmail = escapeHtml(email);
 
   const accessedAt = new Date().toLocaleString("en-US", {
     timeZone: "America/Chicago",
@@ -32,7 +43,7 @@ export async function sendAccessNotification(email: string): Promise<void> {
         <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
           <tr>
             <td style="padding: 10px 12px; background: #f5f5f5; color: #666; width: 90px; border-radius: 4px 0 0 0;">Email</td>
-            <td style="padding: 10px 12px; background: #fafafa; color: #111; font-weight: 600;">${email}</td>
+            <td style="padding: 10px 12px; background: #fafafa; color: #111; font-weight: 600;">${safeEmail}</td>
           </tr>
           <tr>
             <td style="padding: 10px 12px; background: #f5f5f5; color: #666; border-radius: 0 0 0 4px;">Time</td>

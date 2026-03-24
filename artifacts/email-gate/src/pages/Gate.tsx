@@ -192,7 +192,7 @@ export default function Gate() {
             style={{ color: "rgba(247,245,239,0.35)", fontFamily: "'Source Sans 3', sans-serif" }}
           >
             <LockKeyhole className="w-3.5 h-3.5" />
-            <span>End-to-end encrypted session</span>
+            <span>Access verified via secure server session</span>
           </div>
         </div>
       </motion.div>
