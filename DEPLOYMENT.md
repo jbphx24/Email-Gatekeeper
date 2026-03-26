@@ -110,7 +110,7 @@ This builds everything and creates a `dist-deploy/` folder with:
 ```
 dist-deploy/
 ├── api-server/
-│   ├── dist/index.cjs      ← compiled Node.js server
+│   ├── dist/index.mjs      ← compiled Node.js server
 │   └── public/             ← protected static website
 └── email-gate/
     └── public/             ← compiled email-gate SPA

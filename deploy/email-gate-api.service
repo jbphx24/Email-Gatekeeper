@@ -26,7 +26,7 @@ WorkingDirectory=/opt/email-gate/api-server
 # See DEPLOYMENT.md for required variables
 EnvironmentFile=/etc/email-gate/env
 
-ExecStart=/usr/bin/node dist/index.cjs
+ExecStart=/usr/bin/node dist/index.mjs
 Restart=on-failure
 RestartSec=5
 

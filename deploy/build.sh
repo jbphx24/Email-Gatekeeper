@@ -7,7 +7,7 @@
 # Output:
 #   dist-deploy/
 #   ├── api-server/
-#   │   ├── dist/index.cjs      ← compiled Node.js server (single file)
+#   │   ├── dist/index.mjs      ← compiled Node.js server (single file)
 #   │   └── public/             ← protected static website
 #   └── email-gate/
 #       └── public/             ← compiled email-gate SPA (static files)
