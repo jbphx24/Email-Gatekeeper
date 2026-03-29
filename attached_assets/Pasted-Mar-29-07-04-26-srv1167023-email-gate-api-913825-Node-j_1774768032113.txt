@@ -1,0 +1,18 @@
+Mar 29 07:04:26 srv1167023 email-gate-api[913825]: Node.js v20.20.2
+Mar 29 07:04:26 srv1167023 systemd[1]: email-gate-api.service: Main process exited, code=exited, status=1/FAILURE
+Mar 29 07:04:26 srv1167023 systemd[1]: email-gate-api.service: Failed with result 'exit-code'.
+Mar 29 07:04:31 srv1167023 systemd[1]: email-gate-api.service: Scheduled restart job, restart counter is at 68948.
+Mar 29 07:04:31 srv1167023 systemd[1]: Started email-gate-api.service - Email Gate — Node.js API Server.
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]: file:///opt/email-gate/api-server/dist/index.mjs:1
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]: var XM=Object.create;var hu=Object.defineProperty;var YM=Object.getOwnPropertyDescriptor;var eL=Object.getOwnPropertyNames;var tL=Object.getPrototypeOf,rL=Object.prototype.hasOwnProperty;var q=(e=>typeof req>
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:                                                                                                                                                                                                                >
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]: Error: Dynamic require of "node:events" is not supported
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at file:///opt/email-gate/api-server/dist/index.mjs:1:382
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at file:///opt/email-gate/api-server/dist/index.mjs:51:590
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at file:///opt/email-gate/api-server/dist/index.mjs:1:494
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at file:///opt/email-gate/api-server/dist/index.mjs:51:1168
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at file:///opt/email-gate/api-server/dist/index.mjs:1:494
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at file:///opt/email-gate/api-server/dist/index.mjs:82:152090
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at ModuleJob.run (node:internal/modules/esm/module_job:325:25)
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+Mar 29 07:04:32 srv1167023 email-gate-api[913839]:     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
