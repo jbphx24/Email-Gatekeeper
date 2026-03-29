@@ -11,11 +11,11 @@
 # ---------------------------------------------------------------------------
 
 # Redirect www → bare domain (remove if you prefer www)
-www.your-domain.com {
-    redir https://your-domain.com{uri} permanent
-}
+#www.spam-america.com {
+    #redir https://www.your-domain.com{uri} permanent
+#}
 
-your-domain.com {
+www.spam-america.com {
 
     # -----------------------------------------------------------------------
     # Security headers
