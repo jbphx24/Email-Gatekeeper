@@ -11,7 +11,7 @@ import { requireAuth } from "./middlewares/requireAuth";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-if (!process.env.COOKIE_SECRET) {
+if (!process.env.COOKIE_SECRET && process.env.NODE_ENV === "production") {
   throw new Error("COOKIE_SECRET environment variable is required.");
 }
 
